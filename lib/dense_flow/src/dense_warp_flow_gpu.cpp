@@ -33,7 +33,7 @@ void calcDenseWarpFlowGPU(string file_name, int bound, int type, int step, int d
 
     // OpenCV 3.1.0 SURF interface
     //
-    // source: http://stackoverflow.com/a/27533437/957997
+    // source: http://stackoverflow.com/a/27533437/957997 
     //  http://stackoverflow.com/questions/27533203/how-do-i-use-sift-in-opencv-3-0-with-c
     cv::Ptr<Feature2D> detector_surf = xfeatures2d::SurfFeatureDetector::create(200);
     cv::Ptr<Feature2D> extractor_surf = xfeatures2d::SurfDescriptorExtractor::create(true, true);
@@ -65,11 +65,11 @@ void calcDenseWarpFlowGPU(string file_name, int bound, int type, int step, int d
 			initializeMats(capture_frame, capture_image, capture_gray,
 						   prev_image, prev_gray);
 			capture_frame.copyTo(prev_image);
-			cvtColor(prev_image, prev_gray, COLOR_BGR2GRAY);
+			cvtColor(prev_image, prev_gray, CV_BGR2GRAY);
 
 			//detect key points
 			human_mask = Mat::ones(capture_frame.size(), CV_8UC1);
-			detector_surf->detect(prev_gray, prev_kpts_surf, human_mask);
+			detector_surf->detect(prev_gray, prev_kpts_surf, human_mask); 
 			extractor_surf->compute(prev_gray, prev_kpts_surf, prev_desc_surf);
             // TODO! check detector_surf->detectAndCompute()
 
@@ -81,7 +81,7 @@ void calcDenseWarpFlowGPU(string file_name, int bound, int type, int step, int d
 			}
 		}else {
 			capture_frame.copyTo(capture_image);
-			cvtColor(capture_image, capture_gray, COLOR_BGR2GRAY);
+			cvtColor(capture_image, capture_gray, CV_BGR2GRAY);
 			d_frame_0.upload(prev_gray);
 			d_frame_1.upload(capture_gray);
 
