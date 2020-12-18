@@ -1,29 +1,20 @@
 #!/usr/bin/env bash
+
+module load python/3.8.6 cmake/gcc-8.2.0/3.16.2 openmpi/mlnx/gcc/64/2.0.2a1 ffmpeg/gcc-4.8.5/3.2.4 zlib/gcc-8.2.0/1.2.11 atlas/3.10.3 blas/gcc/64/3.7.0 blacs/openmpi/open64/64/1.1patch03 blast/2.5.0 cuda/gcc-4.8.5/8.0.44 lapack/gcc/64/3.7.0 openblas/dynamic/0.2.18 libjpeg/gcc-8.2.0/9c
+
 CAFFE_USE_MPI=${1:-OFF}
 CAFFE_MPI_PREFIX=${MPI_PREFIX:-""}
 
-# update the submodules: Caffe and Dense Flow
-git submodule update --remote
-
-# install Caffe dependencies
-sudo apt-get -qq install libprotobuf-dev libleveldb-dev libsnappy-dev libhdf5-serial-dev protobuf-compiler libatlas-base-dev
-sudo apt-get -qq install --no-install-recommends libboost1.55-all-dev
-sudo apt-get -qq install libgflags-dev libgoogle-glog-dev liblmdb-dev
-
-# install Dense_Flow dependencies
-sudo apt-get -qq install libzip-dev
 
 # install common dependencies: OpenCV
 # adpated from OpenCV.sh
-version="2.4.13"
+version="3.4.2"
 
 echo "Building OpenCV" $version
 [[ -d 3rd-party ]] || mkdir 3rd-party/
 cd 3rd-party/
 
 if [ ! -d "opencv-$version" ]; then
-    echo "Installing OpenCV Dependenices"
-    sudo apt-get -qq install libopencv-dev build-essential checkinstall cmake pkg-config yasm libjpeg-dev libjasper-dev libavcodec-dev libavformat-dev libswscale-dev libdc1394-22-dev libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev libv4l-dev python-dev python-numpy libtbb-dev libqt4-dev libgtk2.0-dev libfaac-dev libmp3lame-dev libopencore-amrnb-dev libopencore-amrwb-dev libtheora-dev libvorbis-dev libxvidcore-dev x264 v4l-utils
 
     echo "Downloading OpenCV" $version
     wget -O OpenCV-$version.zip https://github.com/Itseez/opencv/archive/$version.zip
